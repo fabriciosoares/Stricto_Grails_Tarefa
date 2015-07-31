@@ -19,9 +19,21 @@ class TaskController {
 //		respond taskInstance
 //	}
 
-//	def create() {
-//		respond new Task(params)
-//	}
+	def create() {
+		redirect action: "index", method: "GET" //, find('#taskCreation' ).removeClass('not')  // Foco no campo task
+	}
+
+	def edit(Task taskInstance) {
+		redirect action: "index", method: "GET" // respond taskInstance // Foco no campo task
+	}
+	
+	def clean() {
+		redirect action: "index", method: "GET" // Foco no campo task
+	}
+	
+	def complete(Task taskInstance) {
+		redirect action: "index", method: "GET"
+	}
 
 	@Transactional
 	def save(Task taskInstance) {
@@ -29,51 +41,35 @@ class TaskController {
 			notFound()
 			return
 		}
-
 		if (taskInstance.hasErrors()) {
 			respond taskInstance.errors, view:'create'
 			return
 		}
-
 		taskInstance.save flush:true
+		redirect action: "index", method: "GET"
+	}
 
-		redirect taskInstance
-
+//	@Transactional
+//	def update(Task taskInstance) {
+//		if (taskInstance == null) {
+//			notFound()
+//			return
+//		}
+//
+//		if (taskInstance.hasErrors()) {
+//			respond taskInstance.errors, view:'edit'
+//		}
+//
+//		taskInstance.save flush:true
+//
 //		request.withFormat {
 //			form multipartForm {
-//				flash.message = message(code: 'default.created.message', args: [message(code: 'task.label', default: 'Task'), taskInstance.id])
+//				flash.message = message(code: 'default.updated.message', args: [message(code: 'Task.label', default: 'Task'), taskInstance.id])
 //				redirect taskInstance
 //			}
-//			'*' { respond taskInstance, [status: CREATED] }
+//			'*'{ respond taskInstance, [status: OK] }
 //		}
-	}
-
-	def edit(Task taskInstance) {
-		respond taskInstance
-	}
-
-	@Transactional
-	def update(Task taskInstance) {
-		if (taskInstance == null) {
-			notFound()
-			return
-		}
-
-		if (taskInstance.hasErrors()) {
-			respond taskInstance.errors, view:'edit'
-			return
-		}
-
-		taskInstance.save flush:true
-
-		request.withFormat {
-			form multipartForm {
-				flash.message = message(code: 'default.updated.message', args: [message(code: 'Task.label', default: 'Task'), taskInstance.id])
-				redirect taskInstance
-			}
-			'*'{ respond taskInstance, [status: OK] }
-		}
-	}
+//	}
 
 	@Transactional
 	def delete(Task taskInstance) {

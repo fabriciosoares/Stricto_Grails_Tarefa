@@ -1,38 +1,44 @@
-
 <%@ page import="stricto_grails_tarefa.Task" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'task.label', default: 'Task')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<title>Tarefas</title>
+		<link rel="stylesheet" type="text/css" href="/Stricto_Grails_Tarefa/assets/02-tasks.css" media="screen" />
 	</head>
 	<body>
-		<div id="list-task" class="content scaffold-list" role="main">
-			<h1>Lista de Tarefas</h1>
+		<header>
+			<span>Lista de Tarefas</span>
+		</header>
+		<main id="taskPage">
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			
-			<g:form url="[action:'save']" >
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="Salvar Tarefa" />
-					<g:submitButton name="clean" class="clean" value="Limpar Tarefa" />
-				</fieldset>
-			</g:form>
+			<section id="taskCreation"> <!-- class="not"> -->
+				<g:form url="[resource:taskInstance, action:'save']" id="taskForm">
+					<g:hiddenField name="version" value="${taskInstance?.version}" />
+					<fieldset class="form">
+						<g:render template="form"/>
+					</fieldset> 
+					<nav>
+						<g:submitButton id="saveTask" name="create" class="save" value="Salvar Tarefa" />
+						<g:submitButton name="clean" class="clean" value="Limpar Tarefa" />
+					</nav>
+				</g:form>
+			</section>
 			
 			<table>
-			<thead>
+				<colgroup>
+					<col width="40%">
+					<col width="15%">
+					<col width="15%">
+					<col width="30%">
+				</colgroup>
+				<thead>
 					<tr>
-					
-						<g:sortableColumn property="task" title="${message(code: 'task.task.label', default: 'Nome')}" />
-						<g:sortableColumn property="requiredBy" title="${message(code: 'task.requiredBy.label', default: 'Dead Line')}" />
-						<g:sortableColumn property="category" title="${message(code: 'task.category.label', default: 'Categoria')}" />
-						<td>Ações</td>
-						
+						<th>Nome</th>
+						<th>Deadline</th>
+						<th>Categoria</th>
+						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,7 +61,7 @@
 				</g:each>
 				</tbody>
 			</table>
-		</div>
+		</main>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><g:link class="create" action="create">Adicionar Tarefa</g:link></li>
