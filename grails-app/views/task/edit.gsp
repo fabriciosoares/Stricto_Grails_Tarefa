@@ -2,40 +2,71 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'task.label', default: 'Task')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<title>Tarefas</title>
+		<link rel="stylesheet" type="text/css" href="/Stricto_Grails_Tarefa/assets/02-tasks.css" media="screen" />
 	</head>
 	<body>
-		<a href="#edit-task" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="edit-task" class="content scaffold-edit" role="main">
-			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+		<header>
+			<span>Lista de Tarefas</span>
+		</header>
+		<main id="taskPage">
 			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:hasErrors bean="${taskInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${taskInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form url="[resource:taskInstance, action:'update']" method="PUT" >
-				<g:hiddenField name="version" value="${taskInstance?.version}" />
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
-			</g:form>
-		</div>
+			<section id="taskCreation"> <!-- class="not"> -->
+				<g:form url="[resource:taskInstance, action:'save']" id="taskForm">
+					<g:hiddenField name="version" value="${taskInstance?.version}" />
+					<fieldset class="form">
+						<g:render template="form"/>
+					</fieldset> 
+					<nav>
+						<g:submitButton id="saveTask" name="create" class="save" value="Salvar Tarefa" />
+						<g:link class="create" action="create">Limpar Tarefa</g:link>
+					</nav>
+				</g:form>
+				<table>
+					<colgroup>
+						<col width="40%">
+						<col width="15%">
+						<col width="15%">
+						<col width="30%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Deadline</th>
+							<th>Categoria</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in="${taskInstanceList}" status="i" var="taskInstance">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								<td>${fieldValue(bean: taskInstance, field: "task")}</td>
+								<td>${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+								<td>${fieldValue(bean: taskInstance, field: "category")}</td>
+								<td>
+									<nav>
+										<g:link class="edit" action="edit" resource="${taskInstance}">Editar</g:link>
+										<g:link class="complete" action="complete" resource="${taskInstance}">Completar</g:link>
+										<g:link class="delete" action="delete" resource="${taskInstance}">Remover</g:link>
+									</nav>
+								</td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+				<div class="nav" role="navigation">
+					<nav>
+						<g:link class="create" action="create">Adicionar Tarefa</g:link>
+					</nav>
+				</div>
+			</section>
+		</main>
+		<footer>
+			<div class="pagination">
+				Você tem <g:paginate total="${taskInstanceCount ?: 0}" /> tarefas
+			</div>
+		</footer>
 	</body>
 </html>

@@ -14,61 +14,49 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<section id="taskCreation"> <!-- class="not"> -->
-				<g:form url="[resource:taskInstance, action:'save']" id="taskForm">
-					<g:hiddenField name="version" value="${taskInstance?.version}" />
-					<fieldset class="form">
-						<g:render template="form"/>
-					</fieldset> 
+				<table>
+					<colgroup>
+						<col width="40%">
+						<col width="15%">
+						<col width="15%">
+						<col width="30%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Deadline</th>
+							<th>Categoria</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<g:each in="${taskInstanceList}" status="i" var="taskInstance">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								<td>${fieldValue(bean: taskInstance, field: "task")}</td>
+								<td>${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+								<td>${fieldValue(bean: taskInstance, field: "category")}</td>
+								<td>
+									<nav>
+										<g:link class="edit" action="edit" resource="${taskInstance}">Editar</g:link>
+										<g:link class="complete" action="complete" resource="${taskInstance}">Completar</g:link>
+										<g:link class="delete" action="delete" resource="${taskInstance}">Remover</g:link>
+									</nav>
+								</td>
+							</tr>
+						</g:each>
+					</tbody>
+				</table>
+				<div class="nav" role="navigation">
 					<nav>
-						<g:submitButton id="saveTask" name="create" class="save" value="Salvar Tarefa" />
-						<g:submitButton name="clean" class="clean" value="Limpar Tarefa" />
+								<g:link class="create" action="create">Adicionar Tarefa</g:link>
 					</nav>
-				</g:form>
+				</div>
 			</section>
-			
-			<table>
-				<colgroup>
-					<col width="40%">
-					<col width="15%">
-					<col width="15%">
-					<col width="30%">
-				</colgroup>
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Deadline</th>
-						<th>Categoria</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${taskInstanceList}" status="i" var="taskInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td>${fieldValue(bean: taskInstance, field: "task")}</td>
-						
-						<td><g:formatDate date="${taskInstance.requiredBy}" /></td>
-						
-						<td>${fieldValue(bean: taskInstance, field: "category")}</td>
-						
-						<td>
-							<g:link class="edit" action="edit" resource="${taskInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-							<g:link class="complete" action="complete">Completar</g:link>
-							<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-						</td>
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
 		</main>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><g:link class="create" action="create">Adicionar Tarefa</g:link></li>
-			</ul>
-		</div>
-		<div class="pagination">
-			Você tem <g:paginate total="${taskInstanceCount ?: 0}" /> tarefas
-		</div>
+		<footer>
+			<div class="pagination">
+				Você tem <g:paginate total="${taskInstanceCount ?: 0}" /> tarefas
+			</div>
+		</footer>
 	</body>
 </html>
