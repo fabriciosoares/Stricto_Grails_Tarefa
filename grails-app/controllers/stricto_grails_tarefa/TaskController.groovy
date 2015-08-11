@@ -23,8 +23,20 @@ class TaskController {
 		respond taskInstance
 		respond Task.list(params), view: 'edit'
 	}
-	
+
+	@Transactional
 	def complete(Task taskInstance) {
+		if (taskInstance == null) {
+			notFound()
+			return
+		}
+		if (taskInstance.hasErrors()) {
+			respond taskInstance.errors, view:'index'
+		}
+		
+		taskInstance.setComplete(true);
+		
+		taskInstance.save flush:true
 		redirect action: "index", method: "GET"
 	}
 

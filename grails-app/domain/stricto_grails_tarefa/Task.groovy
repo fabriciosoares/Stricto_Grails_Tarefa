@@ -7,6 +7,10 @@ class Task {
 	String category
 	Boolean complete = false
 
+	public void setComplete(Boolean complete) {
+		this.complete = complete;
+	}
+
 	static constraints = {
 	}
 	

@@ -15,86 +15,77 @@ registerSitemeshPreprocessMode()
 printHtmlPart(0)
 createTagBody(1, {->
 printHtmlPart(1)
-invokeTag('captureMeta','sitemesh',5,['gsp_sm_xmlClosingForEmptyTag':(""),'name':("layout"),'content':("main")],-1)
-printHtmlPart(1)
-invokeTag('set','g',6,['var':("entityName"),'value':(message(code: 'task.label', default: 'Task'))],-1)
-printHtmlPart(1)
 createTagBody(2, {->
-createTagBody(3, {->
-invokeTag('message','g',7,['code':("default.edit.label"),'args':([entityName])],-1)
+createClosureForHtmlPart(2, 3)
+invokeTag('captureTitle','sitemesh',5,[:],3)
 })
-invokeTag('captureTitle','sitemesh',7,[:],3)
-})
-invokeTag('wrapTitleTag','sitemesh',7,[:],2)
-printHtmlPart(2)
-})
-invokeTag('captureHead','sitemesh',8,[:],1)
-printHtmlPart(2)
-createTagBody(1, {->
+invokeTag('wrapTitleTag','sitemesh',5,[:],2)
 printHtmlPart(3)
-invokeTag('message','g',10,['code':("default.link.skip.label"),'default':("Skip to content&hellip;")],-1)
+})
+invokeTag('captureHead','sitemesh',7,[:],1)
 printHtmlPart(4)
-expressionOut.print(createLink(uri: '/'))
+createTagBody(1, {->
 printHtmlPart(5)
-invokeTag('message','g',13,['code':("default.home.label")],-1)
-printHtmlPart(6)
-createTagBody(2, {->
-invokeTag('message','g',14,['code':("default.list.label"),'args':([entityName])],-1)
-})
-invokeTag('link','g',14,['class':("list"),'action':("index")],2)
-printHtmlPart(7)
-createTagBody(2, {->
-invokeTag('message','g',15,['code':("default.new.label"),'args':([entityName])],-1)
-})
-invokeTag('link','g',15,['class':("create"),'action':("create")],2)
-printHtmlPart(8)
-invokeTag('message','g',19,['code':("default.edit.label"),'args':([entityName])],-1)
-printHtmlPart(9)
 if(true && (flash.message)) {
-printHtmlPart(10)
+printHtmlPart(6)
 expressionOut.print(flash.message)
+printHtmlPart(7)
+}
+printHtmlPart(8)
+createTagBody(2, {->
+printHtmlPart(9)
+invokeTag('hiddenField','g',18,['name':("version"),'value':(taskInstance?.version)],-1)
+printHtmlPart(10)
+invokeTag('render','g',20,['template':("form")],-1)
 printHtmlPart(11)
-}
+invokeTag('submitButton','g',23,['id':("saveTask"),'name':("create"),'class':("save"),'value':("Salvar Tarefa")],-1)
 printHtmlPart(12)
-createTagBody(2, {->
-printHtmlPart(13)
-createTagBody(3, {->
+createClosureForHtmlPart(13, 3)
+invokeTag('link','g',24,['class':("create"),'action':("create")],3)
 printHtmlPart(14)
-if(true && (error in org.springframework.validation.FieldError)) {
+})
+invokeTag('form','g',26,['url':([resource:taskInstance, action:'save']),'id':("taskForm")],2)
 printHtmlPart(15)
-expressionOut.print(error.field)
+loop:{
+int i = 0
+for( taskInstance in (taskInstanceList) ) {
 printHtmlPart(16)
-}
+expressionOut.print((i % 2) == 0 ? 'even' : 'odd')
 printHtmlPart(17)
-invokeTag('message','g',26,['error':(error)],-1)
+expressionOut.print(fieldValue(bean: taskInstance, field: "task"))
 printHtmlPart(18)
-})
-invokeTag('eachError','g',27,['bean':(taskInstance),'var':("error")],3)
+expressionOut.print(fieldValue(bean: taskInstance, field: "requiredBy"))
+printHtmlPart(18)
+expressionOut.print(fieldValue(bean: taskInstance, field: "category"))
 printHtmlPart(19)
-})
-invokeTag('hasErrors','g',29,['bean':(taskInstance)],2)
-printHtmlPart(12)
-createTagBody(2, {->
-printHtmlPart(20)
-invokeTag('hiddenField','g',31,['name':("version"),'value':(taskInstance?.version)],-1)
+createClosureForHtmlPart(20, 3)
+invokeTag('link','g',50,['class':("edit"),'action':("edit"),'resource':(taskInstance)],3)
 printHtmlPart(21)
-invokeTag('render','g',33,['template':("form")],-1)
-printHtmlPart(22)
-invokeTag('actionSubmit','g',36,['class':("save"),'action':("update"),'value':(message(code: 'default.button.update.label', default: 'Update'))],-1)
-printHtmlPart(23)
-})
-invokeTag('form','g',38,['url':([resource:taskInstance, action:'update']),'method':("PUT")],2)
+createClosureForHtmlPart(22, 3)
+invokeTag('link','g',51,['class':("complete"),'action':("complete"),'resource':(taskInstance)],3)
+printHtmlPart(21)
+createClosureForHtmlPart(23, 3)
+invokeTag('link','g',52,['class':("delete"),'action':("delete"),'resource':(taskInstance)],3)
 printHtmlPart(24)
-})
-invokeTag('captureBody','sitemesh',40,[:],1)
+i++
+}
+}
 printHtmlPart(25)
+createClosureForHtmlPart(26, 2)
+invokeTag('link','g',61,['class':("create"),'action':("create")],2)
+printHtmlPart(27)
+invokeTag('paginate','g',68,['total':(taskInstanceCount ?: 0)],-1)
+printHtmlPart(28)
+})
+invokeTag('captureBody','sitemesh',71,[:],1)
+printHtmlPart(29)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1439000564000L
+public static final long LAST_MODIFIED = 1439189077000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

@@ -32,16 +32,32 @@
 					<tbody>
 						<g:each in="${taskInstanceList}" status="i" var="taskInstance">
 							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-								<td>${fieldValue(bean: taskInstance, field: "task")}</td>
-								<td>${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
-								<td>${fieldValue(bean: taskInstance, field: "category")}</td>
-								<td>
-									<nav>
-										<g:link class="edit" action="edit" resource="${taskInstance}">Editar</g:link>
-										<g:link class="complete" action="complete" resource="${taskInstance}">Completar</g:link>
-										<g:link class="delete" action="delete" resource="${taskInstance}">Remover</g:link>
-									</nav>
-								</td>
+								<g:if test="${taskInstance.complete == true}">
+									<td class="taskCompleted">
+										${fieldValue(bean: taskInstance, field: "task")}
+									</td>
+									<td class="taskCompleted">
+										${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+									<td class="taskCompleted">
+										${fieldValue(bean: taskInstance, field: "category")}</td>
+									<td>
+										<nav>
+											<g:link class="delete" action="delete" resource="${taskInstance}">Remover</g:link>
+										</nav>
+									</td>
+								</g:if>
+								<g:else>
+									<td>${fieldValue(bean: taskInstance, field: "task")}</td>
+									<td>${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+									<td>${fieldValue(bean: taskInstance, field: "category")}</td>
+									<td>
+										<nav>
+											<g:link class="edit" action="edit" resource="${taskInstance}">Editar</g:link>
+											<g:link class="complete" action="complete" resource="${taskInstance}">Completar</g:link>
+											<g:link class="delete" action="delete" resource="${taskInstance}">Remover</g:link>
+										</nav>
+									</td>
+								</g:else>
 							</tr>
 						</g:each>
 					</tbody>

@@ -32,60 +32,46 @@ expressionOut.print(flash.message)
 printHtmlPart(7)
 }
 printHtmlPart(8)
-createTagBody(2, {->
-printHtmlPart(9)
-invokeTag('hiddenField','g',18,['name':("version"),'value':(taskInstance?.version)],-1)
-printHtmlPart(10)
-invokeTag('render','g',20,['template':("form")],-1)
-printHtmlPart(11)
-invokeTag('submitButton','g',23,['id':("saveTask"),'name':("create"),'class':("save"),'value':("Salvar Tarefa")],-1)
-printHtmlPart(12)
-invokeTag('submitButton','g',24,['name':("clean"),'class':("clean"),'value':("Limpar Tarefa")],-1)
-printHtmlPart(13)
-})
-invokeTag('form','g',26,['url':([resource:taskInstance, action:'save']),'id':("taskForm")],2)
-printHtmlPart(14)
 loop:{
 int i = 0
 for( taskInstance in (taskInstanceList) ) {
-printHtmlPart(15)
+printHtmlPart(9)
 expressionOut.print((i % 2) == 0 ? 'even' : 'odd')
-printHtmlPart(16)
+printHtmlPart(10)
 expressionOut.print(fieldValue(bean: taskInstance, field: "task"))
-printHtmlPart(17)
-invokeTag('formatDate','g',50,['date':(taskInstance.requiredBy)],-1)
-printHtmlPart(17)
+printHtmlPart(11)
+expressionOut.print(fieldValue(bean: taskInstance, field: "requiredBy"))
+printHtmlPart(11)
 expressionOut.print(fieldValue(bean: taskInstance, field: "category"))
-printHtmlPart(18)
-createTagBody(3, {->
-invokeTag('message','g',55,['code':("default.button.edit.label"),'default':("Edit")],-1)
-})
-invokeTag('link','g',55,['class':("edit"),'action':("edit"),'resource':(taskInstance)],3)
-printHtmlPart(19)
-createClosureForHtmlPart(20, 3)
-invokeTag('link','g',56,['class':("complete"),'action':("complete")],3)
-printHtmlPart(19)
-invokeTag('actionSubmit','g',57,['class':("delete"),'action':("delete"),'value':(message(code: 'default.button.delete.label', default: 'Delete')),'onclick':("return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');")],-1)
-printHtmlPart(21)
+printHtmlPart(12)
+createClosureForHtmlPart(13, 3)
+invokeTag('link','g',40,['class':("edit"),'action':("edit"),'resource':(taskInstance)],3)
+printHtmlPart(14)
+createClosureForHtmlPart(15, 3)
+invokeTag('link','g',41,['class':("complete"),'action':("complete"),'resource':(taskInstance)],3)
+printHtmlPart(14)
+createClosureForHtmlPart(16, 3)
+invokeTag('link','g',42,['class':("delete"),'action':("delete"),'resource':(taskInstance)],3)
+printHtmlPart(17)
 i++
 }
 }
-printHtmlPart(22)
-createClosureForHtmlPart(23, 2)
-invokeTag('link','g',67,['class':("create"),'action':("create")],2)
-printHtmlPart(24)
-invokeTag('paginate','g',71,['total':(taskInstanceCount ?: 0)],-1)
-printHtmlPart(25)
+printHtmlPart(18)
+createClosureForHtmlPart(19, 2)
+invokeTag('link','g',51,['class':("create"),'action':("create")],2)
+printHtmlPart(20)
+invokeTag('paginate','g',58,['total':(taskInstanceCount ?: 0)],-1)
+printHtmlPart(21)
 })
-invokeTag('captureBody','sitemesh',73,[:],1)
-printHtmlPart(26)
+invokeTag('captureBody','sitemesh',61,[:],1)
+printHtmlPart(22)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1439000564000L
+public static final long LAST_MODIFIED = 1439189310000L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'
