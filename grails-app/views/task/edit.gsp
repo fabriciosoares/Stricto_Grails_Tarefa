@@ -41,11 +41,17 @@
 					</thead>
 					<tbody>
 						<g:each in="${taskInstanceList}" status="i" var="taskInstance">
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'} ">
 								<g:if test="${taskInstance.complete == true}">
-									<td class="taskCompleted">${fieldValue(bean: taskInstance, field: "task")}</td>
-									<td class="taskCompleted">${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
-									<td class="taskCompleted">${fieldValue(bean: taskInstance, field: "category")}</td>
+									<td class="taskCompleted">
+										${fieldValue(bean: taskInstance, field: "task")}
+									</td>
+									<td class="taskCompleted">
+										<g:formatDate date="${taskInstance.requiredBy}" format='yyyy-MM-dd' />
+									</td>
+									<td class="taskCompleted">
+										${fieldValue(bean: taskInstance, field: "category")}
+									</td>
 									<td>
 										<nav>
 											<g:link class="delete" action="delete" resource="${taskInstance}">Remover</g:link>
@@ -54,7 +60,7 @@
 								</g:if>
 								<g:else>
 									<td>${fieldValue(bean: taskInstance, field: "task")}</td>
-									<td>${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+									<td><g:formatDate date="${taskInstance.requiredBy}" format='yyyy-MM-dd' /></td>
 									<td>${fieldValue(bean: taskInstance, field: "category")}</td>
 									<td>
 										<nav>
@@ -77,7 +83,7 @@
 		</main>
 		<footer>
 			<div class="pagination">
-				Você tem <g:paginate total="${taskInstanceCount ?: 0}" /> tarefas
+				Você tem ${i}<g:paginate total="${taskInstanceCount > 0 ? taskInstanceCount : 0}" /> tarefas
 			</div>
 		</footer>
 	</body>

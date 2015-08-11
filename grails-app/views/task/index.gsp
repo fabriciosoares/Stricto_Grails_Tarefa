@@ -37,7 +37,8 @@
 										${fieldValue(bean: taskInstance, field: "task")}
 									</td>
 									<td class="taskCompleted">
-										${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+										<g:formatDate date="${taskInstance.requiredBy}" format='yyyy-MM-dd' />
+									</td>
 									<td class="taskCompleted">
 										${fieldValue(bean: taskInstance, field: "category")}</td>
 									<td>
@@ -48,7 +49,7 @@
 								</g:if>
 								<g:else>
 									<td>${fieldValue(bean: taskInstance, field: "task")}</td>
-									<td>${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+									<td><g:formatDate date="${taskInstance.requiredBy}" format='yyyy-MM-dd' /></td>
 									<td>${fieldValue(bean: taskInstance, field: "category")}</td>
 									<td>
 										<nav>
@@ -64,14 +65,14 @@
 				</table>
 				<div class="nav" role="navigation">
 					<nav>
-								<g:link class="create" action="create">Adicionar Tarefa</g:link>
+						<g:link class="create" action="create">Adicionar Tarefa</g:link>
 					</nav>
 				</div>
 			</section>
 		</main>
 		<footer>
 			<div class="pagination">
-				Você tem <g:paginate total="${taskInstanceCount ?: 0}" /> tarefas
+				Você tem <g:paginate total="${taskInstanceCount > 0 ? taskInstanceCount: 0}" /> tarefas
 			</div>
 		</footer>
 	</body>

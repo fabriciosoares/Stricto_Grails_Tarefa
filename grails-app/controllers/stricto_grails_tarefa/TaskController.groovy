@@ -10,7 +10,8 @@ class TaskController {
 
 	def index(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
-		respond Task.list(params) //, model:[taskInstanceCount: Task.count()]
+	//	params.sort(taskInstance.requiredBy)
+		respond Task.list(params) //, sort: "taskInstance.requiredBy", order: "desc") //, model:[taskInstanceCount: Task.count()]
 	}
 
 	def create(Integer max) {
