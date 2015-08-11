@@ -7,7 +7,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: taskInstance, field: 'requiredBy', 'error')} required">
 	<label>Finalizar até<span class="required">*</span></label>
-	<g:textField type="date" required="required" name="requiredBy" value="${taskInstance?.requiredBy}" />
+	<g:textField required="required" name="requiredBy" value="${taskInstance?.requiredBy}" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: taskInstance, field: 'category', 'error')} required">

@@ -1,9 +1,12 @@
 package stricto_grails_tarefa
 
+import org.grails.databinding.BindingFormat
+
 class Task {
 
 	String task
-	String requiredBy
+	@BindingFormat('yyyy-MM-dd')
+	Date requiredBy
 	String category
 	Boolean complete = false
 
@@ -20,5 +23,13 @@ class Task {
 	
 	def count() {
 		
+	}
+
+	public Date getRequiredBy() {
+		return requiredBy;
+	}
+
+	public void setRequiredBy(Date requiredBy) {
+		this.requiredBy = requiredBy
 	}
 }

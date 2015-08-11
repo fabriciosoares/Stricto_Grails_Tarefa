@@ -50,6 +50,7 @@ class TaskController {
 			respond taskInstance.errors, view:'index'
 			return
 		}
+	//	taskInstance.setRequiredBy(Date().parse("yyyy-MM-dd", taskInstance.requiredBy))
 		taskInstance.save flush:true
 		redirect action: "index", method: "GET"
 	}

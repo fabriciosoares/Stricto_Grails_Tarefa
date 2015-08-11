@@ -43,13 +43,9 @@
 						<g:each in="${taskInstanceList}" status="i" var="taskInstance">
 							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 								<g:if test="${taskInstance.complete == true}">
-										<td class="taskCompleted">
-										${fieldValue(bean: taskInstance, field: "task")}
-									</td>
-									<td class="taskCompleted">
-										${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
-									<td class="taskCompleted">
-										${fieldValue(bean: taskInstance, field: "category")}</td>
+									<td class="taskCompleted">${fieldValue(bean: taskInstance, field: "task")}</td>
+									<td class="taskCompleted">${fieldValue(bean: taskInstance, field: "requiredBy")}</td>
+									<td class="taskCompleted">${fieldValue(bean: taskInstance, field: "category")}</td>
 									<td>
 										<nav>
 											<g:link class="delete" action="delete" resource="${taskInstance}">Remover</g:link>
